@@ -294,7 +294,7 @@ export function SectionForm({
           transition={{ delay: 0.3 }}
           className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-2xl z-40"
         >
-          <div className="max-w-5xl mx-auto px-8 py-4">
+          <div className="max-w-5xl mx-auto px-8 py-4 pr-32">
             {/* Progress Indicator */}
             <div className="mb-4">
               <div className="flex items-center justify-between text-sm mb-2">

@@ -3,7 +3,6 @@ import { InterviewHeader } from './components/InterviewHeader';
 import { ProgressBar } from './components/ProgressBar';
 import { SectionForm } from './components/SectionForm';
 import { ReviewSection } from './components/ReviewSection';
-import { VoiceAssistant } from './components/VoiceAssistant';
 import { Toaster } from './components/ui/sonner';
 
 interface FormField {
@@ -193,8 +192,6 @@ const sectionNames = sections.map(s => s.name);
 export default function App() {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [formData, setFormData] = useState<Record<string, any>>({});
-  const [isVoiceActive, setIsVoiceActive] = useState(false);
-  const [voiceTranscript, setVoiceTranscript] = useState('');
   const [timeRemaining, setTimeRemaining] = useState(15);
 
   const currentSection = sections[currentSectionIndex];
@@ -233,17 +230,6 @@ export default function App() {
     }
   };
 
-  const handleVoiceToggle = () => {
-    setIsVoiceActive(!isVoiceActive);
-    if (!isVoiceActive) {
-      // Simulate voice recognition
-      setTimeout(() => {
-        setVoiceTranscript('John Michael Smith');
-      }, 1000);
-    } else {
-      setVoiceTranscript('');
-    }
-  };
 
   const handleSectionClick = (index: number) => {
     setCurrentSectionIndex(index);
@@ -296,13 +282,6 @@ export default function App() {
           />
         )}
 
-        {/* Voice Assistant */}
-        <VoiceAssistant
-          isActive={isVoiceActive}
-          transcript={voiceTranscript}
-          onToggle={handleVoiceToggle}
-          currentQuestion={currentSection.name}
-        />
       </main>
 
       {/* Toast Notifications */}
