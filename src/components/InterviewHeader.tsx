@@ -7,16 +7,12 @@ export function InterviewHeader() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center gap-8">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-[#0046B8] rounded flex items-center justify-center">
-                <svg viewBox="0 0 24 24" fill="white" className="w-6 h-6">
-                  <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
-                </svg>
-              </div>
-              <div>
-                <div className="text-[#0046B8]">Prudential</div>
-                <div className="text-xs text-gray-500">150 Years Strong</div>
-              </div>
+            <div className="flex items-center">
+              <img
+                src="/Screenshot 2025-11-04 at 3.34.00 PM.png"
+                alt="Prudential 150 Years"
+                className="h-12"
+              />
             </div>
 
             {/* Navigation */}
