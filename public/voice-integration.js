@@ -1,128 +1,43 @@
 window.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => initializeVoiceIntegration(), 2000);
-});
+    console.log('ElevenLabs integration starting...');
 
-// Listen for ALL events from ElevenLabs
-window.addEventListener('message', (event) => {
-    console.log('Message received:', event);
-    console.log('Event data:', event.data);
-});
-
-// Try different event names
-window.addEventListener('elevenlabs-function-call', (event) => {
-    console.log('ElevenLabs function call:', event);
-});
-
-window.addEventListener('elevenLabsCall', (event) => {
-    console.log('ElevenLabs call:', event);
-});
-
-function initializeVoiceIntegration() {
-    const widget = document.querySelector('elevenlabs-convai');
-    if (!widget) {
-        console.log('ElevenLabs widget not found, retrying...');
-        setTimeout(() => initializeVoiceIntegration(), 1000);
-        return;
-    }
-
-    // Watch the widget itself
-    widget.addEventListener('onCall', (event) => {
-        console.log('Widget onCall:', event);
-    });
-
-    widget.addEventListener('function-call', (event) => {
-        console.log('Widget function-call:', event);
-    });
-
+    // Listen for messages from ElevenLabs widget
     window.addEventListener('message', (event) => {
-        if (event.data && event.data.type === 'elevenlabs:response') {
-            processVoiceInput(event.data.text);
+        console.log('Message received:', event);
+
+        if (event.data && event.data.type === 'elevenlabs:tool') {
+            console.log('Tool call detected!', event.data);
+            if (event.data.tool === 'fillFormField') {
+                fillFormField(event.data.parameters.fieldName, event.data.parameters.value);
+            }
         }
     });
 
-    setupFormListeners();
-    console.log('ElevenLabs voice integration initialized');
-}
+    // Also listen for direct tool events
+    window.addEventListener('fillFormField', (event) => {
+        console.log('Direct tool event:', event);
+        if (event.detail) {
+            fillFormField(event.detail.fieldName, event.detail.value);
+        }
+    });
+});
 
-function processVoiceInput(text) {
-    if (!text) return;
-    console.log('Voice said:', text);
+function fillFormField(fieldName, value) {
+    console.log(`FILLING: ${fieldName} = ${value}`);
 
-    // Listen for agent confirmations
-    if (text.includes("I'll fill in your name as")) {
-        const name = text.split("name as ")[1];
-        fillFormField('fullName', name);
-    }
-
-    if (text.includes("Setting your email to")) {
-        const email = text.split("email to ")[1];
-        fillFormField('email', email);
-    }
-
-    if (text.includes("Recording phone number")) {
-        const phone = text.split("phone number ")[1];
-        fillFormField('phone', phone);
-    }
-
-    // Direct detection from user speech
-    const emailMatch = text.match(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/);
-    if (emailMatch) fillFormField('email', emailMatch[1]);
-
-    const phoneMatch = text.match(/(\d{3}[-.\s]?\d{3}[-.\s]?\d{4})/);
-    if (phoneMatch) fillFormField('phone', phoneMatch[1]);
-}
-
-function formatPhoneNumber(phone) {
-    const digits = phone.replace(/\D/g, '');
-    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
-}
-
-function fillFormField(fieldId, value) {
-    const field = document.getElementById(fieldId) ||
-                  document.querySelector(`[name="${fieldId}"]`) ||
-                  document.querySelector(`input[id*="${fieldId}"]`);
+    const field = document.getElementById(fieldName) ||
+                  document.querySelector(`[name="${fieldName}"]`);
 
     if (field) {
-        if (field.tagName === 'INPUT' || field.tagName === 'TEXTAREA') {
-            field.value = value;
-            field.dispatchEvent(new Event('input', { bubbles: true }));
-            field.dispatchEvent(new Event('change', { bubbles: true }));
-        }
-
-        highlightField(field);
-        console.log('Filled field:', fieldId, 'with value:', value);
+        field.value = value;
+        field.style.borderColor = '#0046B8';
+        field.style.backgroundColor = '#E6F2FF';
+        setTimeout(() => {
+            field.style.borderColor = '';
+            field.style.backgroundColor = '';
+        }, 2000);
+        console.log('✓ Field filled successfully');
     } else {
-        console.log('Field not found:', fieldId);
+        console.log('✗ Field not found:', fieldName);
     }
-}
-
-function highlightField(field) {
-    field.style.transition = 'all 0.3s ease';
-    field.style.borderColor = '#0046B8';
-    field.style.backgroundColor = '#E6F2FF';
-    field.style.boxShadow = '0 0 10px rgba(0, 70, 184, 0.3)';
-
-    setTimeout(() => {
-        field.style.borderColor = '';
-        field.style.backgroundColor = '';
-        field.style.boxShadow = '';
-    }, 2000);
-}
-
-function setupFormListeners() {
-    const observer = new MutationObserver(() => {
-        document.querySelectorAll('input, textarea, select').forEach(field => {
-            if (!field.dataset.voiceEnabled) {
-                field.dataset.voiceEnabled = 'true';
-                field.addEventListener('change', (e) => {
-                    console.log('Field updated:', e.target.id || e.target.name, e.target.value);
-                });
-            }
-        });
-    });
-
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
-    });
 }
