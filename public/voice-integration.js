@@ -22,73 +22,30 @@ function initializeVoiceIntegration() {
 
 function processVoiceInput(text) {
     if (!text) return;
-    const lowerText = text.toLowerCase();
+    console.log('Voice said:', text);
 
-    console.log('Processing voice input:', text);
-
-    const nameMatch = text.match(/(?:my name is|i am|i'm)\s+([A-Za-z\s]+?)(?:\.|,|$|and|my)/i);
-    if (nameMatch) {
-        const name = nameMatch[1].trim();
+    // Listen for agent confirmations
+    if (text.includes("I'll fill in your name as")) {
+        const name = text.split("name as ")[1];
         fillFormField('fullName', name);
-        console.log('Detected name:', name);
     }
 
+    if (text.includes("Setting your email to")) {
+        const email = text.split("email to ")[1];
+        fillFormField('email', email);
+    }
+
+    if (text.includes("Recording phone number")) {
+        const phone = text.split("phone number ")[1];
+        fillFormField('phone', phone);
+    }
+
+    // Direct detection from user speech
     const emailMatch = text.match(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/);
-    if (emailMatch) {
-        fillFormField('emailAddress', emailMatch[1]);
-        console.log('Detected email:', emailMatch[1]);
-    }
+    if (emailMatch) fillFormField('email', emailMatch[1]);
 
-    const phoneMatch = text.match(/(\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4})/);
-    if (phoneMatch) {
-        const phone = phoneMatch[1];
-        const formattedPhone = formatPhoneNumber(phone);
-        fillFormField('phoneNumber', formattedPhone);
-        console.log('Detected phone:', formattedPhone);
-    }
-
-    const ssnMatch = text.match(/(\d{3}[-.\s]?\d{2}[-.\s]?\d{4})/);
-    if (ssnMatch && !phoneMatch) {
-        const ssn = ssnMatch[1].replace(/[.\s]/g, '-');
-        fillFormField('ssn', ssn);
-        console.log('Detected SSN');
-    }
-
-    const dateMatch = text.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
-    if (dateMatch) {
-        const month = dateMatch[1].padStart(2, '0');
-        const day = dateMatch[2].padStart(2, '0');
-        const year = dateMatch[3];
-        const formattedDate = `${year}-${month}-${day}`;
-
-        if (lowerText.includes('birth') || lowerText.includes('born')) {
-            fillFormField('dateOfBirth', formattedDate);
-            console.log('Detected date of birth:', formattedDate);
-        } else {
-            fillFormField('dateOfBirth', formattedDate);
-        }
-    }
-
-    const addressMatch = text.match(/(?:address|live at|located at)\s+(.+?)(?:\.|,|$)/i);
-    if (addressMatch) {
-        fillFormField('currentAddress', addressMatch[1].trim());
-        console.log('Detected address:', addressMatch[1].trim());
-    }
-
-    if (lowerText.includes('male') && !lowerText.includes('female')) {
-        fillFormField('gender', 'Male');
-        console.log('Detected gender: Male');
-    } else if (lowerText.includes('female')) {
-        fillFormField('gender', 'Female');
-        console.log('Detected gender: Female');
-    }
-
-    const maritalStatusMatch = lowerText.match(/\b(single|married|divorced|widowed)\b/);
-    if (maritalStatusMatch) {
-        const status = maritalStatusMatch[1].charAt(0).toUpperCase() + maritalStatusMatch[1].slice(1);
-        fillFormField('maritalStatus', status);
-        console.log('Detected marital status:', status);
-    }
+    const phoneMatch = text.match(/(\d{3}[-.\s]?\d{3}[-.\s]?\d{4})/);
+    if (phoneMatch) fillFormField('phone', phoneMatch[1]);
 }
 
 function formatPhoneNumber(phone) {
