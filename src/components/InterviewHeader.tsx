@@ -7,20 +7,16 @@ export function InterviewHeader() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center gap-8">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[#003087] rounded-sm flex items-center justify-center">
-                <svg viewBox="0 0 24 24" fill="white" className="w-6 h-6">
-                  <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
-                </svg>
-              </div>
-              <div>
-                <div className="text-[#003087] font-bold text-xl tracking-tight" style={{ fontFamily: 'Georgia, serif' }}>
+            <div className="flex items-center">
+              <svg className="h-10" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <text x="5" y="38" fontFamily="Georgia, serif" fontSize="32" fontWeight="bold" fill="#003087" letterSpacing="-0.5">
                   Prudential
-                </div>
-                <div className="text-[10px] text-gray-600 font-medium tracking-wide">
-                  150 YEARS STRONG
-                </div>
-              </div>
+                </text>
+                <line x1="220" y1="15" x2="220" y2="45" stroke="#003087" strokeWidth="2" />
+                <text x="235" y="38" fontFamily="Arial, sans-serif" fontSize="38" fontWeight="300" fill="#003087" letterSpacing="2">
+                  150
+                </text>
+              </svg>
             </div>
 
             {/* Navigation */}
