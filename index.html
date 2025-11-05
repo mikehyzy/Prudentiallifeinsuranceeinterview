@@ -11,9 +11,12 @@
       <div id="root"></div>
       <script type="module" src="/src/main.tsx"></script>
 
+      <!-- Load voice integration FIRST -->
+      <script src="/voice-integration.js"></script>
+
+      <!-- Then load ElevenLabs widget -->
       <elevenlabs-convai agent-id="agent_4301k95kgvjcf7pae9s837pe3bca"></elevenlabs-convai>
       <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
-      <script src="/voice-integration.js"></script>
     </body>
   </html>
   
