@@ -46,6 +46,31 @@
       self.fillFormField = window.fillFormField;
 
       console.log('fillFormField defined INLINE before widget loads');
+
+      // Wait for ElevenLabs widget to load and attach the function to it
+      function attachToWidget() {
+          const widget = document.querySelector('elevenlabs-convai');
+          if (widget) {
+              widget.fillFormField = window.fillFormField;
+              console.log('✓ fillFormField attached to widget element');
+
+              // Also try attaching to shadow root if it exists
+              if (widget.shadowRoot) {
+                  widget.shadowRoot.fillFormField = window.fillFormField;
+                  console.log('✓ fillFormField attached to shadow root');
+              }
+          } else {
+              console.log('Widget not found, retrying...');
+              setTimeout(attachToWidget, 100);
+          }
+      }
+
+      // Start trying to attach after DOM loads
+      if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', attachToWidget);
+      } else {
+          attachToWidget();
+      }
       </script>
 
       <!-- NOW load ElevenLabs widget -->
