@@ -2,6 +2,21 @@ window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => initializeVoiceIntegration(), 2000);
 });
 
+// Listen for ALL events from ElevenLabs
+window.addEventListener('message', (event) => {
+    console.log('Message received:', event);
+    console.log('Event data:', event.data);
+});
+
+// Try different event names
+window.addEventListener('elevenlabs-function-call', (event) => {
+    console.log('ElevenLabs function call:', event);
+});
+
+window.addEventListener('elevenLabsCall', (event) => {
+    console.log('ElevenLabs call:', event);
+});
+
 function initializeVoiceIntegration() {
     const widget = document.querySelector('elevenlabs-convai');
     if (!widget) {
@@ -9,6 +24,15 @@ function initializeVoiceIntegration() {
         setTimeout(() => initializeVoiceIntegration(), 1000);
         return;
     }
+
+    // Watch the widget itself
+    widget.addEventListener('onCall', (event) => {
+        console.log('Widget onCall:', event);
+    });
+
+    widget.addEventListener('function-call', (event) => {
+        console.log('Widget function-call:', event);
+    });
 
     window.addEventListener('message', (event) => {
         if (event.data && event.data.type === 'elevenlabs:response') {
