@@ -8,11 +8,21 @@ export function InterviewHeader() {
           {/* Logo */}
           <div className="flex items-center gap-8">
             <div className="flex items-center">
-              <img
-                src="/Screenshot 2025-11-04 at 3.34.00 PM.png"
-                alt="Prudential 150 Years"
-                className="h-12"
-              />
+              <svg className="h-12" viewBox="0 0 420 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <text x="5" y="35" fontFamily="Georgia, serif" fontSize="32" fontWeight="bold" fill="#003087" letterSpacing="-0.5">
+                  Prudential
+                </text>
+                <line x1="220" y1="10" x2="220" y2="50" stroke="#003087" strokeWidth="2" />
+                <text x="235" y="35" fontFamily="Arial, sans-serif" fontSize="38" fontWeight="300" fill="#003087" letterSpacing="2">
+                  150
+                </text>
+                <circle cx="390" cy="30" r="22" stroke="#003087" strokeWidth="2" fill="none" />
+                <path d="M 390 8 L 390 30 L 405 30" stroke="#003087" strokeWidth="2" fill="none" />
+                <path d="M 368 30 C 368 18 378 12 390 12 C 402 12 412 18 412 30 C 412 42 402 48 390 48 C 378 48 368 42 368 30" stroke="#003087" strokeWidth="1.5" fill="none" />
+                <text x="375" y="56" fontFamily="Arial, sans-serif" fontSize="7" fill="#003087" letterSpacing="1">
+                  YEARS
+                </text>
+              </svg>
             </div>
 
             {/* Navigation */}
