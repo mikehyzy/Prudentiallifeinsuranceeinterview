@@ -242,9 +242,16 @@ export default function App() {
       
       <main className="max-w-5xl mx-auto px-4 py-8">
         {/* Title Section */}
-        <div className="text-center mb-8">
-          <h1 className="text-[#0046B8] mb-2">Life Insurance E-Interview</h1>
-          <p className="text-gray-600">Complete your application with our AI assistant</p>
+        <div className="relative bg-gradient-to-r from-[#0046B8] via-[#003087] to-[#0046B8] py-12 px-8 rounded-2xl shadow-2xl mb-8 overflow-hidden">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjA1IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30"></div>
+          <div className="relative z-10 text-center">
+            <h1 className="text-white mb-3 font-black text-5xl tracking-tight leading-none drop-shadow-lg">
+              Life Insurance E-Interview
+            </h1>
+            <p className="text-white/90 text-lg font-medium tracking-wide">Complete your application with our AI assistant</p>
+          </div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -ml-32 -mb-32"></div>
         </div>
 
         {/* Progress Bar */}

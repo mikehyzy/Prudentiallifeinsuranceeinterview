@@ -34,28 +34,28 @@ export function ProgressBar({ sections, currentSection, onSectionClick }: Progre
             >
               {/* Circle Indicator */}
               <motion.div
-                className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-all ${
+                className={`w-12 h-12 rounded-full flex items-center justify-center mb-2 transition-all shadow-lg font-bold text-lg ${
                   isCompleted
-                    ? 'bg-[#0046B8] text-white group-hover:bg-[#003087]'
+                    ? 'bg-gradient-to-br from-[#0046B8] to-[#003087] text-white group-hover:shadow-xl'
                     : isCurrent
-                    ? 'bg-[#0046B8] text-white ring-4 ring-blue-100 group-hover:bg-[#003087]'
-                    : 'bg-white border-2 border-gray-300 text-gray-400 group-hover:border-[#0046B8] group-hover:text-[#0046B8]'
+                    ? 'bg-gradient-to-br from-[#0046B8] to-[#003087] text-white ring-4 ring-blue-200 shadow-2xl group-hover:shadow-xl'
+                    : 'bg-white border-3 border-gray-300 text-gray-400 group-hover:border-[#0046B8] group-hover:text-[#0046B8] group-hover:shadow-xl'
                 }`}
                 animate={isCurrent ? { scale: [1, 1.1, 1] } : { scale: 1 }}
                 transition={{ duration: 0.5 }}
               >
                 {isCompleted ? (
-                  <Check className="w-5 h-5" />
+                  <Check className="w-6 h-6 stroke-[3]" />
                 ) : (
-                  <span>{index + 1}</span>
+                  <span className="font-black">{index + 1}</span>
                 )}
               </motion.div>
 
               {/* Label */}
               <span
-                className={`text-xs text-center max-w-[80px] transition-colors ${
+                className={`text-sm text-center max-w-[90px] transition-colors font-semibold ${
                   isCurrent
-                    ? 'text-[#0046B8]'
+                    ? 'text-[#0046B8] font-bold'
                     : isCompleted
                     ? 'text-gray-700 group-hover:text-[#0046B8]'
                     : 'text-gray-400 group-hover:text-[#0046B8]'
