@@ -289,13 +289,13 @@ export default function App() {
       <InterviewHeader />
 
       <main className="max-w-6xl mx-auto px-6 py-12">
-        <div className="relative bg-[#0046B8] py-32 px-12 shadow-2xl mb-12 overflow-hidden flex items-center justify-center min-h-[400px]">
+        <div className="relative bg-[#0046B8] px-12 shadow-2xl mb-12 overflow-hidden" style={{ paddingTop: '120px', paddingBottom: '40px' }}>
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjA4IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-40"></div>
           <div className="relative z-10 text-center max-w-4xl mx-auto">
             <h1 className="text-white mb-6 tracking-tight leading-none drop-shadow-2xl" style={{ fontSize: '56px', fontFamily: 'Century Schoolbook, Georgia, serif', fontWeight: 'bold' }}>
               Life Insurance E-Interview
             </h1>
-            <p className="text-white/90 text-2xl md:text-3xl font-semibold tracking-wide mb-8">
+            <p className="text-white/90 text-2xl md:text-3xl font-semibold tracking-wide">
               Complete your application with our AI assistant
             </p>
           </div>
