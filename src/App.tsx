@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { toast } from 'sonner';
 import { InterviewHeader } from './components/InterviewHeader';
 import { ProgressBar } from './components/ProgressBar';
 import { SectionForm } from './components/SectionForm';
 import { ReviewSection } from './components/ReviewSection';
 import { Toaster } from './components/ui/sonner';
+import { toast } from 'sonner';
 import { VoiceWidget } from './components/VoiceWidget';
 
 const formatDateForInput = (dateString: string): string => {
@@ -18,6 +18,8 @@ const formatDateForInput = (dateString: string): string => {
   }
   return date.toISOString().split('T')[0];
 };
+
+const normalizeId = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 
 interface FormField {
   id: string;
@@ -210,18 +212,16 @@ export default function App() {
   const [timeRemaining, setTimeRemaining] = useState(15);
 
   const handleFieldUpdate = (rawFieldId: string, value: string) => {
-    const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
-
     let targetId = ALL_FIELD_IDS.has(rawFieldId) ? rawFieldId : null;
 
     if (!targetId) {
-        const normalizedInput = normalize(rawFieldId);
+        const normalizedInput = normalizeId(rawFieldId);
         for (const validId of ALL_FIELD_IDS) {
-            if (normalize(validId) === normalizedInput) {
+            if (normalizeId(validId) === normalizedInput) {
                 targetId = validId;
                 break;
             }
-            if (normalize(validId).includes(normalizedInput) || normalizedInput.includes(normalize(validId))) {
+            if (normalizeId(validId).includes(normalizedInput) || normalizedInput.includes(normalizeId(validId))) {
                 if (normalizedInput.length > 4) {
                      targetId = validId;
                      break;
@@ -249,7 +249,6 @@ export default function App() {
   const totalFields = sections.reduce((sum, section) => sum + section.fields.length, 0);
   const answeredCount = Object.keys(formData).filter(key => formData[key]).length;
 
-  // Calculate starting question number for current section
   const getStartingQuestionNumber = (sectionIndex: number) => {
     let count = 1;
     for (let i = 0; i < sectionIndex; i++) {
@@ -259,7 +258,6 @@ export default function App() {
   };
 
   useEffect(() => {
-    // Simulate time decreasing as fields are answered
     const baseTime = 15;
     const timePerField = baseTime / totalFields;
     setTimeRemaining(Math.max(1, Math.ceil(baseTime - (answeredCount * timePerField))));
@@ -281,7 +279,6 @@ export default function App() {
     }
   };
 
-
   const handleSectionClick = (index: number) => {
     setCurrentSectionIndex(index);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -290,9 +287,8 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       <InterviewHeader />
-      
+
       <main className="max-w-5xl mx-auto px-4 py-8">
-        {/* Title Section */}
         <div className="relative bg-[#0046B8] py-[58px] px-8 rounded-2xl shadow-2xl mb-8 overflow-hidden">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjA1IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30"></div>
           <div className="relative z-10 text-center">
@@ -305,21 +301,18 @@ export default function App() {
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -ml-32 -mb-32"></div>
         </div>
 
-        {/* Progress Bar */}
-        <ProgressBar 
+        <ProgressBar
           sections={sectionNames}
           currentSection={currentSectionIndex}
           onSectionClick={handleSectionClick}
         />
 
-        {/* Time Estimate */}
         {currentSection.name !== 'Review' && (
           <div className="text-center text-gray-500 mb-6">
             About {timeRemaining} minutes remaining
           </div>
         )}
 
-        {/* Section Form or Review */}
         {currentSection.name === 'Review' ? (
           <ReviewSection
             formData={formData}
@@ -342,10 +335,8 @@ export default function App() {
 
       </main>
 
-      {/* Toast Notifications */}
       <Toaster position="top-center" />
 
-      {/* Voice Widget */}
       <VoiceWidget onFieldUpdate={handleFieldUpdate} />
     </div>
   );
