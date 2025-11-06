@@ -197,10 +197,29 @@ export default function App() {
   const [timeRemaining, setTimeRemaining] = useState(15);
 
   const fieldMap: Record<string, string> = {
-    'dob': 'dateOfBirth',
-    'email': 'emailAddress',
-    'phone': 'phoneNumber',
+    // Personal Info
+    'full_name': 'fullName',
+    'legal_name': 'fullName',
     'name': 'fullName',
+    'dob': 'dateOfBirth',
+    'date_of_birth': 'dateOfBirth',
+    'birth_date': 'dateOfBirth',
+    'ssn': 'ssn',
+    'social': 'ssn',
+    'social_security': 'ssn',
+    'gender': 'gender',
+    'sex': 'gender',
+    'marital_status': 'maritalStatus',
+    'current_address': 'currentAddress',
+    'home_address': 'currentAddress',
+    'years_at_address': 'yearsAtAddress',
+    'previous_address': 'previousAddress',
+    'phone': 'phoneNumber',
+    'phone_number': 'phoneNumber',
+    'email': 'emailAddress',
+    'email_address': 'emailAddress',
+    'citizenship': 'citizenship',
+    'country_of_birth': 'countryOfBirth'
   };
 
   const conversation = useConversation({
