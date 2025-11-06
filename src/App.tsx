@@ -205,7 +205,7 @@ export default function App() {
 
   const conversation = useConversation({
     onError: (error) => {
-      toast.error(`Voice Agent Error: ${error.message}`);
+      toast.error(`Voice Agent Error: ${error?.message || 'Unknown error'}`);
     },
     onConnect: () => {
       toast.success('Voice agent connected');
@@ -214,28 +214,11 @@ export default function App() {
       toast.info('Voice agent disconnected');
     },
     clientTools: {
-      fillFormField: {
-        description: 'Fills a form field with the provided value',
-        parameters: {
-          type: 'object',
-          properties: {
-            fieldId: {
-              type: 'string',
-              description: 'The ID of the form field to fill',
-            },
-            value: {
-              type: 'string',
-              description: 'The value to set in the field',
-            },
-          },
-          required: ['fieldId', 'value'],
-        },
-        handler: async ({ fieldId, value }: { fieldId: string; value: string }) => {
-          const mappedFieldId = fieldMap[fieldId] || fieldId;
-          setFormData(prev => ({ ...prev, [mappedFieldId]: value }));
-          toast.success(`Filled ${mappedFieldId}: ${value}`);
-          return { success: true, fieldId: mappedFieldId, value };
-        },
+      fillFormField: async ({ fieldId, value }: { fieldId: string; value: string }) => {
+        const mappedFieldId = fieldMap[fieldId] || fieldId;
+        setFormData(prev => ({ ...prev, [mappedFieldId]: value }));
+        toast.success(`Filled ${mappedFieldId}: ${value}`);
+        return { success: true, fieldId: mappedFieldId, value };
       },
     },
   });
