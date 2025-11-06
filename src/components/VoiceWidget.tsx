@@ -102,24 +102,42 @@ export const VoiceWidget: React.FC<VoiceWidgetProps> = ({ onFieldUpdate }) => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={toggleConversation}
-        className="relative z-50 w-16 h-16 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex items-center justify-center transition-all bg-white overflow-hidden"
+        className="relative z-50 w-16 h-16 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex items-center justify-center transition-all overflow-hidden"
+        style={{
+          background: conversation.status === 'connected'
+            ? 'linear-gradient(135deg, #0046B8 0%, #001538 100%)'
+            : '#0046B8'
+        }}
       >
         {conversation.status === 'connected' ? (
-           <div className="absolute inset-0 bg-gradient-to-br from-[#0046B8] to-[#001538]">
+           <>
              <motion.div
                animate={{ rotate: 360 }}
                transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
-               className="absolute inset-[-50%] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#00FFFF_50%,transparent_100%)] opacity-30 mix-blend-overlay"
+               className="absolute inset-[-50%] opacity-30 mix-blend-overlay"
+               style={{
+                 background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, #00FFFF 50%, transparent 100%)'
+               }}
              />
-             <div className="absolute inset-[2px] rounded-full bg-gradient-to-br from-[#0055E6] to-[#00338D] flex items-center justify-center">
-                <motion.div
-                  animate={{ scale: conversation.isSpeaking ? [1, 1.2, 1] : 1 }}
-                  className="w-8 h-8 rounded-full bg-white/20 blur-md"
-                />
-             </div>
-           </div>
+             <motion.div
+               animate={{ scale: conversation.isSpeaking ? [1, 1.2, 1] : 1 }}
+               transition={{ repeat: Infinity, duration: 2 }}
+               className="absolute w-8 h-8 rounded-full bg-white/20 blur-md"
+             />
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" className="relative z-10">
+               <rect x="9" y="2" width="6" height="12" rx="2" />
+               <path d="M5 10v2a7 7 0 0 0 14 0v-2" />
+               <line x1="12" y1="18" x2="12" y2="22" />
+               <line x1="8" y1="22" x2="16" y2="22" />
+             </svg>
+           </>
         ) : (
-           <img src="https://www.prudential.com/wcm/myassets/wb_header_footer/Pru_Logo_Blue_RGB.svg" alt="Prudential" className="w-8 h-8" />
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+            <rect x="9" y="2" width="6" height="12" rx="2" />
+            <path d="M5 10v2a7 7 0 0 0 14 0v-2" />
+            <line x1="12" y1="18" x2="12" y2="22" />
+            <line x1="8" y1="22" x2="16" y2="22" />
+          </svg>
         )}
       </motion.button>
     </div>
