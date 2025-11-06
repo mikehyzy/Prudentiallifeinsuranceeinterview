@@ -222,37 +222,66 @@ export default function App() {
   };
 
   useEffect(() => {
-    const handleWidgetEvent = (event: CustomEvent) => {
-      if (event.type === 'elevenlabs-convai:client-tool-call' && event.detail?.toolName === 'fillFormField') {
-        console.log('Widget requested form fill:', event.detail.parameters);
-        const { fieldId, value } = event.detail.parameters;
+    const performFill = ({ fieldId, value }: { fieldId: string; value: string }) => {
+       console.log('[React] Agent requesting fill:', fieldId, value);
 
-        if (!fieldId || !value) {
-          console.error('Missing fieldId or value:', event.detail.parameters);
-          return;
-        }
+       const fieldMap: Record<string, string> = {
+          'full_name': 'fullName',
+          'legal_name': 'fullName',
+          'name': 'fullName',
+          'dob': 'dateOfBirth',
+          'date_of_birth': 'dateOfBirth',
+          'birth_date': 'dateOfBirth',
+          'ssn': 'ssn',
+          'social': 'ssn',
+          'social_security': 'ssn',
+          'gender': 'gender',
+          'marital_status': 'maritalStatus',
+          'current_address': 'currentAddress',
+          'address': 'currentAddress',
+          'years_at_address': 'yearsAtAddress',
+          'previous_address': 'previousAddress',
+          'phone': 'phoneNumber',
+          'phone_number': 'phoneNumber',
+          'email': 'emailAddress',
+          'email_address': 'emailAddress',
+          'citizenship': 'citizenship',
+          'country_of_birth': 'countryOfBirth'
+       };
 
-        const actualFieldId = fieldMap[fieldId] || fieldId;
+       const actualFieldId = fieldMap[fieldId] || fieldId;
 
-        setFormData(prev => ({
-          ...prev,
-          [actualFieldId]: value
-        }));
+       setFormData(prev => {
+         console.log(`[React] Updating state: ${actualFieldId} = ${value}`);
+         return { ...prev, [actualFieldId]: value };
+       });
 
-        toast.success(`Updated ${actualFieldId}`);
-      }
+       toast.success(`Agent filled: ${actualFieldId}`);
+       return "Success";
     };
 
-    const timer = setTimeout(() => {
-      const widget = document.querySelector('elevenlabs-convai');
-      if (widget) {
-        widget.addEventListener('elevenlabs-convai:client-tool-call', handleWidgetEvent as EventListener);
-        console.log('Attached listener to ElevenLabs widget');
-      }
-    }, 2000);
+    const intervalId = setInterval(() => {
+      const widget = document.querySelector('elevenlabs-convai') as any;
 
-    return () => clearTimeout(timer);
-  }, [fieldMap]);
+      if (widget) {
+        console.log("[React] Found ElevenLabs widget. Attaching clientTools...");
+
+        widget.clientTools = {
+          fillFormField: performFill
+        };
+
+        widget.addEventListener('elevenlabs-convai:call', () => {
+             console.log('[React] Call started - ensuring tools are attached');
+             widget.clientTools = { fillFormField: performFill };
+        });
+
+        clearInterval(intervalId);
+        toast.success('Voice Agent Ready');
+      }
+    }, 500);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const currentSection = sections[currentSectionIndex];
   const totalFields = sections.reduce((sum, section) => sum + section.fields.length, 0);
