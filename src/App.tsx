@@ -222,34 +222,36 @@ export default function App() {
   };
 
   useEffect(() => {
-    const handleToolCall = (event: any) => {
-      if (event.detail && event.detail.name === 'fillFormField') {
-        console.log('Widget triggering form fill:', event.detail);
-        const params = event.detail.parameters || {};
-        const fieldId = params.fieldId || params.field_id || params.field;
-        const value = params.value;
+    const handleWidgetEvent = (event: CustomEvent) => {
+      if (event.type === 'elevenlabs-convai:client-tool-call' && event.detail?.toolName === 'fillFormField') {
+        console.log('Widget requested form fill:', event.detail.parameters);
+        const { fieldId, value } = event.detail.parameters;
 
         if (!fieldId || !value) {
-          console.error('Missing fieldId or value:', params);
+          console.error('Missing fieldId or value:', event.detail.parameters);
           return;
         }
 
-        const mappedFieldId = fieldMap[fieldId] || fieldId;
-        setFormData(prev => ({ ...prev, [mappedFieldId]: value }));
-        toast.success(`Agent updated ${mappedFieldId}`);
+        const actualFieldId = fieldMap[fieldId] || fieldId;
+
+        setFormData(prev => ({
+          ...prev,
+          [actualFieldId]: value
+        }));
+
+        toast.success(`Updated ${actualFieldId}`);
       }
     };
 
-    const widget = document.querySelector('elevenlabs-convai');
-    if (widget) {
-      widget.addEventListener('elevenlabs-convai:tool-call', handleToolCall);
-    }
-
-    return () => {
+    const timer = setTimeout(() => {
+      const widget = document.querySelector('elevenlabs-convai');
       if (widget) {
-        widget.removeEventListener('elevenlabs-convai:tool-call', handleToolCall);
+        widget.addEventListener('elevenlabs-convai:client-tool-call', handleWidgetEvent as EventListener);
+        console.log('Attached listener to ElevenLabs widget');
       }
-    };
+    }, 2000);
+
+    return () => clearTimeout(timer);
   }, [fieldMap]);
 
   const currentSection = sections[currentSectionIndex];
