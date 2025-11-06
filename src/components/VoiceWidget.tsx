@@ -89,7 +89,7 @@ export const VoiceWidget: React.FC<VoiceWidgetProps> = ({ onFieldUpdate }) => {
         className={`w-16 h-16 rounded-full shadow-2xl flex items-center justify-center transition-all ${
           conversation.status === 'connected'
             ? 'bg-white border-2 border-[#0046B8]'
-            : 'bg-black'
+            : 'bg-[#0046B8]'
         }`}
       >
         {conversation.status === 'connected' ? (
