@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useConversation } from '@elevenlabs/react';
+import { toast } from 'sonner';
 import { InterviewHeader } from './components/InterviewHeader';
 import { ProgressBar } from './components/ProgressBar';
 import { SectionForm } from './components/SectionForm';
@@ -194,6 +196,68 @@ export default function App() {
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [timeRemaining, setTimeRemaining] = useState(15);
 
+  const fieldMap: Record<string, string> = {
+    'dob': 'dateOfBirth',
+    'email': 'emailAddress',
+    'phone': 'phoneNumber',
+    'name': 'fullName',
+  };
+
+  const conversation = useConversation({
+    onError: (error) => {
+      toast.error(`Voice Agent Error: ${error.message}`);
+    },
+    onConnect: () => {
+      toast.success('Voice agent connected');
+    },
+    onDisconnect: () => {
+      toast.info('Voice agent disconnected');
+    },
+    clientTools: {
+      fillFormField: {
+        description: 'Fills a form field with the provided value',
+        parameters: {
+          type: 'object',
+          properties: {
+            fieldId: {
+              type: 'string',
+              description: 'The ID of the form field to fill',
+            },
+            value: {
+              type: 'string',
+              description: 'The value to set in the field',
+            },
+          },
+          required: ['fieldId', 'value'],
+        },
+        handler: async ({ fieldId, value }: { fieldId: string; value: string }) => {
+          const mappedFieldId = fieldMap[fieldId] || fieldId;
+          setFormData(prev => ({ ...prev, [mappedFieldId]: value }));
+          toast.success(`Filled ${mappedFieldId}: ${value}`);
+          return { success: true, fieldId: mappedFieldId, value };
+        },
+      },
+    },
+  });
+
+  const startVoiceAgent = async () => {
+    try {
+      await conversation.startSession({
+        agentId: 'agent_4301k95kgvjcf7pae9s837pe3bca',
+      });
+    } catch (error) {
+      toast.error('Failed to start voice agent');
+    }
+  };
+
+  const stopVoiceAgent = async () => {
+    try {
+      await conversation.endSession();
+    } catch (error) {
+      toast.error('Failed to stop voice agent');
+    }
+  };
+
   const currentSection = sections[currentSectionIndex];
   const totalFields = sections.reduce((sum, section) => sum + section.fields.length, 0);
   const answeredCount = Object.keys(formData).filter(key => formData[key]).length;
@@ -248,7 +312,19 @@ export default function App() {
             <h1 className="text-white mb-3 font-black text-3xl tracking-tight leading-none drop-shadow-lg">
               Life Insurance E-Interview
             </h1>
-            <p className="text-white/90 text-lg font-medium tracking-wide">Complete your application with our AI assistant</p>
+            <p className="text-white/90 text-lg font-medium tracking-wide mb-6">Complete your application with our AI assistant</p>
+            <button
+              onClick={conversation.status === 'connected' ? stopVoiceAgent : startVoiceAgent}
+              className={
+                `px-8 py-3 rounded-lg font-semibold text-base transition-all duration-200 shadow-lg hover:shadow-xl ${
+                  conversation.status === 'connected'
+                    ? 'bg-red-500 hover:bg-red-600 text-white'
+                    : 'bg-white hover:bg-gray-100 text-[#0046B8]'
+                }`
+              }
+            >
+              {conversation.status === 'connected' ? 'Stop Voice Interview' : 'Start Voice Interview'}
+            </button>
           </div>
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -ml-32 -mb-32"></div>

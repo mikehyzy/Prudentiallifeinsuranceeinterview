@@ -10,49 +10,6 @@
     <body>
       <div id="root"></div>
       <script type="module" src="/src/main.tsx"></script>
-
-      <script>
-      // Listen for the widget's actual output
-      const observer = new MutationObserver((mutations) => {
-          mutations.forEach((mutation) => {
-              if (mutation.type === 'childList' || mutation.type === 'characterData') {
-                  const text = mutation.target.textContent || '';
-
-                  // Check if agent is confirming information
-                  if (text.includes('filled in your name as') || text.includes('recording your name')) {
-                      const nameMatch = text.match(/(?:name as|recording)\s+([A-Za-z\s]+)/i);
-                      if (nameMatch) {
-                          const field = document.getElementById('fullName');
-                          if (field) field.value = nameMatch[1].trim();
-                      }
-                  }
-
-                  // Check for email patterns
-                  const emailMatch = text.match(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/);
-                  if (emailMatch) {
-                      const field = document.getElementById('email');
-                      if (field && !field.value) field.value = emailMatch[1];
-                  }
-              }
-          });
-      });
-
-      // Start observing when widget loads
-      setTimeout(() => {
-          const widget = document.querySelector('elevenlabs-convai');
-          if (widget && widget.shadowRoot) {
-              observer.observe(widget.shadowRoot, {
-                  childList: true,
-                  subtree: true,
-                  characterData: true
-              });
-              console.log('Now watching agent responses');
-          }
-      }, 2000);
-      </script>
-
-      <elevenlabs-convai agent-id="agent_4301k95kgvjcf7pae9s837pe3bca"></elevenlabs-convai>
-      <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
     </body>
   </html>
   
