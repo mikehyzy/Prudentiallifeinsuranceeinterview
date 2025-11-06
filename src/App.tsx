@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useConversation } from '@elevenlabs/react';
 import { toast } from 'sonner';
 import { InterviewHeader } from './components/InterviewHeader';
 import { ProgressBar } from './components/ProgressBar';
@@ -222,52 +221,36 @@ export default function App() {
     'country_of_birth': 'countryOfBirth'
   };
 
-  const conversation = useConversation({
-    onError: (error) => {
-      toast.error(`Voice Agent Error: ${error?.message || 'Unknown error'}`);
-    },
-    onConnect: () => {
-      toast.success('Voice agent connected');
-    },
-    onDisconnect: () => {
-      toast.info('Voice agent disconnected');
-    },
-    clientTools: {
-      fillFormField: async (params: any) => {
-        console.log('fillFormField called with:', params);
+  useEffect(() => {
+    const handleToolCall = (event: any) => {
+      if (event.detail && event.detail.name === 'fillFormField') {
+        console.log('Widget triggering form fill:', event.detail);
+        const params = event.detail.parameters || {};
         const fieldId = params.fieldId || params.field_id || params.field;
         const value = params.value;
 
         if (!fieldId || !value) {
           console.error('Missing fieldId or value:', params);
-          return { success: false, error: 'Missing fieldId or value' };
+          return;
         }
 
         const mappedFieldId = fieldMap[fieldId] || fieldId;
         setFormData(prev => ({ ...prev, [mappedFieldId]: value }));
-        toast.success(`Filled ${mappedFieldId}: ${value}`);
-        return { success: true, fieldId: mappedFieldId, value };
-      },
-    },
-  });
+        toast.success(`Agent updated ${mappedFieldId}`);
+      }
+    };
 
-  const startVoiceAgent = async () => {
-    try {
-      await conversation.startSession({
-        agentId: 'agent_4301k95kgvjcf7pae9s837pe3bca',
-      });
-    } catch (error) {
-      toast.error('Failed to start voice agent');
+    const widget = document.querySelector('elevenlabs-convai');
+    if (widget) {
+      widget.addEventListener('elevenlabs-convai:tool-call', handleToolCall);
     }
-  };
 
-  const stopVoiceAgent = async () => {
-    try {
-      await conversation.endSession();
-    } catch (error) {
-      toast.error('Failed to stop voice agent');
-    }
-  };
+    return () => {
+      if (widget) {
+        widget.removeEventListener('elevenlabs-convai:tool-call', handleToolCall);
+      }
+    };
+  }, [fieldMap]);
 
   const currentSection = sections[currentSectionIndex];
   const totalFields = sections.reduce((sum, section) => sum + section.fields.length, 0);
@@ -324,18 +307,7 @@ export default function App() {
               Life Insurance E-Interview
             </h1>
             <p className="text-white/90 text-lg font-medium tracking-wide mb-6">Complete your application with our AI assistant</p>
-            <button
-              onClick={conversation.status === 'connected' ? stopVoiceAgent : startVoiceAgent}
-              className={
-                `px-8 py-3 rounded-lg font-semibold text-base transition-all duration-200 shadow-lg hover:shadow-xl ${
-                  conversation.status === 'connected'
-                    ? 'bg-red-500 hover:bg-red-600 text-white'
-                    : 'bg-white hover:bg-gray-100 text-[#0046B8]'
-                }`
-              }
-            >
-              {conversation.status === 'connected' ? 'Stop Voice Interview' : 'Start Voice Interview'}
-            </button>
+            <elevenlabs-convai agent-id="agent_4301k95kgvjcf7pae9s837pe3bca"></elevenlabs-convai>
           </div>
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -ml-32 -mb-32"></div>
