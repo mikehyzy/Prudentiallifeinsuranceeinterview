@@ -214,7 +214,16 @@ export default function App() {
       toast.info('Voice agent disconnected');
     },
     clientTools: {
-      fillFormField: async ({ fieldId, value }: { fieldId: string; value: string }) => {
+      fillFormField: async (params: any) => {
+        console.log('fillFormField called with:', params);
+        const fieldId = params.fieldId || params.field_id || params.field;
+        const value = params.value;
+
+        if (!fieldId || !value) {
+          console.error('Missing fieldId or value:', params);
+          return { success: false, error: 'Missing fieldId or value' };
+        }
+
         const mappedFieldId = fieldMap[fieldId] || fieldId;
         setFormData(prev => ({ ...prev, [mappedFieldId]: value }));
         toast.success(`Filled ${mappedFieldId}: ${value}`);
