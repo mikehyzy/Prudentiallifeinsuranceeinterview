@@ -5,6 +5,7 @@ import { ProgressBar } from './components/ProgressBar';
 import { SectionForm } from './components/SectionForm';
 import { ReviewSection } from './components/ReviewSection';
 import { Toaster } from './components/ui/sonner';
+import { VoiceWidget } from './components/VoiceWidget';
 
 interface FormField {
   id: string;
@@ -221,67 +222,42 @@ export default function App() {
     'country_of_birth': 'countryOfBirth'
   };
 
-  useEffect(() => {
-    const performFill = ({ fieldId, value }: { fieldId: string; value: string }) => {
-       console.log('[React] Agent requesting fill:', fieldId, value);
+  const handleFieldUpdate = (fieldId: string, value: string) => {
+    console.log('[VoiceWidget] Field update:', fieldId, value);
 
-       const fieldMap: Record<string, string> = {
-          'full_name': 'fullName',
-          'legal_name': 'fullName',
-          'name': 'fullName',
-          'dob': 'dateOfBirth',
-          'date_of_birth': 'dateOfBirth',
-          'birth_date': 'dateOfBirth',
-          'ssn': 'ssn',
-          'social': 'ssn',
-          'social_security': 'ssn',
-          'gender': 'gender',
-          'marital_status': 'maritalStatus',
-          'current_address': 'currentAddress',
-          'address': 'currentAddress',
-          'years_at_address': 'yearsAtAddress',
-          'previous_address': 'previousAddress',
-          'phone': 'phoneNumber',
-          'phone_number': 'phoneNumber',
-          'email': 'emailAddress',
-          'email_address': 'emailAddress',
-          'citizenship': 'citizenship',
-          'country_of_birth': 'countryOfBirth'
-       };
-
-       const actualFieldId = fieldMap[fieldId] || fieldId;
-
-       setFormData(prev => {
-         console.log(`[React] Updating state: ${actualFieldId} = ${value}`);
-         return { ...prev, [actualFieldId]: value };
-       });
-
-       toast.success(`Agent filled: ${actualFieldId}`);
-       return "Success";
+    const fieldMap: Record<string, string> = {
+      'full_name': 'fullName',
+      'legal_name': 'fullName',
+      'name': 'fullName',
+      'dob': 'dateOfBirth',
+      'date_of_birth': 'dateOfBirth',
+      'birth_date': 'dateOfBirth',
+      'ssn': 'ssn',
+      'social': 'ssn',
+      'social_security': 'ssn',
+      'gender': 'gender',
+      'marital_status': 'maritalStatus',
+      'current_address': 'currentAddress',
+      'address': 'currentAddress',
+      'years_at_address': 'yearsAtAddress',
+      'previous_address': 'previousAddress',
+      'phone': 'phoneNumber',
+      'phone_number': 'phoneNumber',
+      'email': 'emailAddress',
+      'email_address': 'emailAddress',
+      'citizenship': 'citizenship',
+      'country_of_birth': 'countryOfBirth'
     };
 
-    const intervalId = setInterval(() => {
-      const widget = document.querySelector('elevenlabs-convai') as any;
+    const actualFieldId = fieldMap[fieldId] || fieldId;
 
-      if (widget) {
-        console.log("[React] Found ElevenLabs widget. Attaching clientTools...");
+    setFormData(prev => {
+      console.log(`[VoiceWidget] Updating state: ${actualFieldId} = ${value}`);
+      return { ...prev, [actualFieldId]: value };
+    });
 
-        widget.clientTools = {
-          fillFormField: performFill
-        };
-
-        widget.addEventListener('elevenlabs-convai:call', () => {
-             console.log('[React] Call started - ensuring tools are attached');
-             widget.clientTools = { fillFormField: performFill };
-        });
-
-        clearInterval(intervalId);
-        toast.success('Voice Agent Ready');
-      }
-    }, 500);
-
-    return () => clearInterval(intervalId);
-  }, []);
+    toast.success(`Updated: ${actualFieldId}`);
+  };
 
   const currentSection = sections[currentSectionIndex];
   const totalFields = sections.reduce((sum, section) => sum + section.fields.length, 0);
@@ -383,8 +359,8 @@ export default function App() {
       {/* Toast Notifications */}
       <Toaster position="top-center" />
 
-      {/* ElevenLabs Voice Widget */}
-      <elevenlabs-convai agent-id="agent_4301k95kgvjcf7pae9s837pe3bca"></elevenlabs-convai>
+      {/* Voice Widget */}
+      <VoiceWidget onFieldUpdate={handleFieldUpdate} />
     </div>
   );
 }

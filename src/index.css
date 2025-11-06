@@ -2516,13 +2516,3 @@ html {
   }
 }
 
-elevenlabs-convai {
-  position: fixed !important;
-  bottom: 110px !important;
-  right: 24px !important;
-  z-index: 9999 !important;
-}
-
-elevenlabs-convai::part(branding) {
-  display: none !important;
-}
