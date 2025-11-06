@@ -52,7 +52,7 @@ export const VoiceWidget: React.FC<VoiceWidgetProps> = ({ onFieldUpdate }) => {
   }, [conversation]);
 
   return (
-    <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end">
+    <div className="fixed bottom-8 right-8 z-50 flex flex-col items-center">
       <AnimatePresence>
         {isExpanded && (
           <motion.div
@@ -60,7 +60,7 @@ export const VoiceWidget: React.FC<VoiceWidgetProps> = ({ onFieldUpdate }) => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="mb-4 bg-white rounded-2xl shadow-2xl p-4 w-72 border border-gray-100 origin-bottom-right"
+            className="mb-4 bg-white rounded-2xl shadow-2xl p-4 w-72 border border-gray-100 origin-bottom"
           >
              <div className="flex items-center justify-between mb-4">
                <div className="flex items-center gap-2">
@@ -98,48 +98,54 @@ export const VoiceWidget: React.FC<VoiceWidgetProps> = ({ onFieldUpdate }) => {
         )}
       </AnimatePresence>
 
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={toggleConversation}
-        className="relative z-50 w-16 h-16 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex items-center justify-center transition-all overflow-hidden"
-        style={{
-          background: conversation.status === 'connected'
-            ? 'linear-gradient(135deg, #0046B8 0%, #001538 100%)'
-            : '#0046B8'
-        }}
-      >
-        {conversation.status === 'connected' ? (
-           <>
-             <motion.div
-               animate={{ rotate: 360 }}
-               transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
-               className="absolute inset-[-50%] opacity-30 mix-blend-overlay"
-               style={{
-                 background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, #00FFFF 50%, transparent 100%)'
-               }}
-             />
-             <motion.div
-               animate={{ scale: conversation.isSpeaking ? [1, 1.2, 1] : 1 }}
-               transition={{ repeat: Infinity, duration: 2 }}
-               className="absolute w-8 h-8 rounded-full bg-white/20 blur-md"
-             />
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" className="relative z-10">
-               <rect x="9" y="2" width="6" height="12" rx="2" />
-               <path d="M5 10v2a7 7 0 0 0 14 0v-2" />
-               <line x1="12" y1="18" x2="12" y2="22" />
-               <line x1="8" y1="22" x2="16" y2="22" />
-             </svg>
-           </>
-        ) : (
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-            <rect x="9" y="2" width="6" height="12" rx="2" />
-            <path d="M5 10v2a7 7 0 0 0 14 0v-2" />
-            <line x1="12" y1="18" x2="12" y2="22" />
-            <line x1="8" y1="22" x2="16" y2="22" />
-          </svg>
-        )}
-      </motion.button>
+      <div className="flex flex-col items-center gap-3">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={toggleConversation}
+          className="relative z-50 w-16 h-16 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex items-center justify-center transition-all overflow-hidden"
+          style={{
+            background: conversation.status === 'connected'
+              ? 'linear-gradient(135deg, #0046B8 0%, #001538 100%)'
+              : '#0046B8'
+          }}
+        >
+          {conversation.status === 'connected' ? (
+             <>
+               <motion.div
+                 animate={{ rotate: 360 }}
+                 transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+                 className="absolute inset-[-50%] opacity-30 mix-blend-overlay"
+                 style={{
+                   background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, #00FFFF 50%, transparent 100%)'
+                 }}
+               />
+               <motion.div
+                 animate={{ scale: conversation.isSpeaking ? [1, 1.2, 1] : 1 }}
+                 transition={{ repeat: Infinity, duration: 2 }}
+                 className="absolute w-8 h-8 rounded-full bg-white/20 blur-md"
+               />
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" className="relative z-10">
+                 <rect x="9" y="2" width="6" height="12" rx="2" />
+                 <path d="M5 10v2a7 7 0 0 0 14 0v-2" />
+                 <line x1="12" y1="18" x2="12" y2="22" />
+                 <line x1="8" y1="22" x2="16" y2="22" />
+               </svg>
+             </>
+          ) : (
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+              <rect x="9" y="2" width="6" height="12" rx="2" />
+              <path d="M5 10v2a7 7 0 0 0 14 0v-2" />
+              <line x1="12" y1="18" x2="12" y2="22" />
+              <line x1="8" y1="22" x2="16" y2="22" />
+            </svg>
+          )}
+        </motion.button>
+
+        <span className="text-sm font-medium text-gray-700 bg-white px-3 py-1.5 rounded-full shadow-sm border border-gray-200">
+          Voice Assistant
+        </span>
+      </div>
     </div>
   );
 };
