@@ -7,6 +7,18 @@ import { ReviewSection } from './components/ReviewSection';
 import { Toaster } from './components/ui/sonner';
 import { VoiceWidget } from './components/VoiceWidget';
 
+const formatDateForInput = (dateString: string): string => {
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) {
+     const parts = dateString.split('/');
+     if (parts.length === 3) {
+         return `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
+     }
+     return dateString;
+  }
+  return date.toISOString().split('T')[0];
+};
+
 interface FormField {
   id: string;
   label: string;
@@ -224,10 +236,16 @@ export default function App() {
     };
 
     const actualFieldId = fieldMap[fieldId] || fieldId;
+    let finalValue = value;
+
+    if (actualFieldId === 'dateOfBirth' || actualFieldId === 'primaryBeneficiaryDOB' || actualFieldId === 'contingentBeneficiaryDOB') {
+        finalValue = formatDateForInput(value);
+        console.log(`[App] Formatted date '${value}' to '${finalValue}'`);
+    }
 
     setFormData(prev => {
-      console.log(`[VoiceWidget] Updating state: ${actualFieldId} = ${value}`);
-      return { ...prev, [actualFieldId]: value };
+      console.log(`[VoiceWidget] Updating state: ${actualFieldId} = ${finalValue}`);
+      return { ...prev, [actualFieldId]: finalValue };
     });
 
     toast.success(`Updated: ${actualFieldId}`);
