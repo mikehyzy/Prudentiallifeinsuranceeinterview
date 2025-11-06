@@ -11,69 +11,46 @@
       <div id="root"></div>
       <script type="module" src="/src/main.tsx"></script>
 
-      <!-- Add this inline script BEFORE the ElevenLabs widget -->
       <script>
-      // Define fillFormField before ANYTHING else loads
-      window.fillFormField = function(fieldName, value) {
-          console.log('FORM FILL CALLED:', fieldName, value);
+      // Listen for the widget's actual output
+      const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+              if (mutation.type === 'childList' || mutation.type === 'characterData') {
+                  const text = mutation.target.textContent || '';
 
-          // Wait for DOM if needed
-          if (document.readyState === 'loading') {
-              document.addEventListener('DOMContentLoaded', () => {
-                  actuallyFillField(fieldName, value);
-              });
-          } else {
-              actuallyFillField(fieldName, value);
-          }
+                  // Check if agent is confirming information
+                  if (text.includes('filled in your name as') || text.includes('recording your name')) {
+                      const nameMatch = text.match(/(?:name as|recording)\s+([A-Za-z\s]+)/i);
+                      if (nameMatch) {
+                          const field = document.getElementById('fullName');
+                          if (field) field.value = nameMatch[1].trim();
+                      }
+                  }
 
-          function actuallyFillField(name, val) {
-              const field = document.getElementById(name) ||
-                           document.querySelector(`input[name="${name}"]`);
-              if (field) {
-                  field.value = val;
-                  field.style.border = '2px solid #0046B8';
-                  console.log('✓ Filled:', name);
-              } else {
-                  console.log('✗ No field:', name);
+                  // Check for email patterns
+                  const emailMatch = text.match(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/);
+                  if (emailMatch) {
+                      const field = document.getElementById('email');
+                      if (field && !field.value) field.value = emailMatch[1];
+                  }
               }
-          }
+          });
+      });
 
-          return { success: true };
-      };
-
-      // Also try exposing it globally multiple ways
-      globalThis.fillFormField = window.fillFormField;
-      self.fillFormField = window.fillFormField;
-
-      console.log('fillFormField defined INLINE before widget loads');
-
-      // Wait for ElevenLabs widget to load and attach the function to it
-      function attachToWidget() {
+      // Start observing when widget loads
+      setTimeout(() => {
           const widget = document.querySelector('elevenlabs-convai');
-          if (widget) {
-              widget.fillFormField = window.fillFormField;
-              console.log('✓ fillFormField attached to widget element');
-
-              // Also try attaching to shadow root if it exists
-              if (widget.shadowRoot) {
-                  widget.shadowRoot.fillFormField = window.fillFormField;
-                  console.log('✓ fillFormField attached to shadow root');
-              }
-          } else {
-              console.log('Widget not found, retrying...');
-              setTimeout(attachToWidget, 100);
+          if (widget && widget.shadowRoot) {
+              observer.observe(widget.shadowRoot, {
+                  childList: true,
+                  subtree: true,
+                  characterData: true
+              });
+              console.log('Now watching agent responses');
           }
-      }
-
-      // Start trying to attach after DOM loads
-      if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', attachToWidget);
-      } else {
-          attachToWidget();
-      }
+      }, 2000);
       </script>
 
-      <!-- NOW load ElevenLabs widget -->
       <elevenlabs-convai agent-id="agent_4301k95kgvjcf7pae9s837pe3bca"></elevenlabs-convai>
       <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
     </body>
