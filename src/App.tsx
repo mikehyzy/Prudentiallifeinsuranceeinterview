@@ -306,8 +306,7 @@ export default function App() {
             <h1 className="text-white mb-3 font-black text-3xl tracking-tight leading-none drop-shadow-lg">
               Life Insurance E-Interview
             </h1>
-            <p className="text-white/90 text-lg font-medium tracking-wide mb-6">Complete your application with our AI assistant</p>
-            <elevenlabs-convai agent-id="agent_4301k95kgvjcf7pae9s837pe3bca"></elevenlabs-convai>
+            <p className="text-white/90 text-lg font-medium tracking-wide">Complete your application with our AI assistant</p>
           </div>
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -ml-32 -mb-32"></div>
@@ -352,6 +351,9 @@ export default function App() {
 
       {/* Toast Notifications */}
       <Toaster position="top-center" />
+
+      {/* ElevenLabs Voice Widget */}
+      <elevenlabs-convai agent-id="agent_4301k95kgvjcf7pae9s837pe3bca"></elevenlabs-convai>
     </div>
   );
 }
