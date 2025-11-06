@@ -29,6 +29,11 @@ export const VoiceWidget: React.FC<VoiceWidgetProps> = ({ onFieldUpdate }) => {
 
         onFieldUpdate(fieldId, value);
         return "OK";
+      },
+      transferCall: (data: any) => {
+        console.log('[VoiceWidget] Transfer requested', data);
+        toast.loading("Transferring to a live Prudential agent...", { duration: 5000 });
+        return "Transfer initiated";
       }
     }
   });
