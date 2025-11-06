@@ -291,11 +291,13 @@ export default function App() {
       <main className="max-w-6xl mx-auto px-6 py-12">
         <div className="relative bg-gradient-to-br from-[#0046B8] via-[#0052CC] to-[#0046B8] py-24 px-12 rounded-3xl shadow-2xl mb-12 overflow-hidden">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjA4IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-40"></div>
-          <div className="relative z-10 text-center max-w-4xl mx-auto">
-            <h1 className="text-white mb-6 font-bold text-5xl md:text-6xl tracking-tight leading-tight" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', letterSpacing: '-0.02em' }}>
+          <div className="relative z-10 text-center max-w-3xl mx-auto">
+            <h1 className="text-white mb-4 font-extrabold text-4xl md:text-5xl tracking-tight leading-tight drop-shadow-lg">
               Life Insurance E-Interview
             </h1>
-            <p className="text-white/95 text-xl md:text-2xl font-normal tracking-wide leading-relaxed">Complete your application with our AI assistant</p>
+            <p className="text-blue-100 text-xl md:text-2xl font-medium tracking-wide mb-2 opacity-90">
+              Complete your application with our AI assistant
+            </p>
           </div>
           <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -mr-48 -mt-48"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -ml-48 -mb-48"></div>
