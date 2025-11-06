@@ -202,53 +202,47 @@ const sections: Section[] = [
 ];
 
 const sectionNames = sections.map(s => s.name);
+const ALL_FIELD_IDS = new Set(sections.flatMap(section => section.fields.map(field => field.id)));
 
 export default function App() {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [timeRemaining, setTimeRemaining] = useState(15);
 
-  const handleFieldUpdate = (fieldId: string, value: string) => {
-    console.log('[VoiceWidget] Field update:', fieldId, value);
+  const handleFieldUpdate = (rawFieldId: string, value: string) => {
+    const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 
-    const fieldMap: Record<string, string> = {
-      'full_name': 'fullName',
-      'legal_name': 'fullName',
-      'name': 'fullName',
-      'dob': 'dateOfBirth',
-      'date_of_birth': 'dateOfBirth',
-      'birth_date': 'dateOfBirth',
-      'ssn': 'ssn',
-      'social': 'ssn',
-      'social_security': 'ssn',
-      'gender': 'gender',
-      'marital_status': 'maritalStatus',
-      'current_address': 'currentAddress',
-      'address': 'currentAddress',
-      'years_at_address': 'yearsAtAddress',
-      'previous_address': 'previousAddress',
-      'phone': 'phoneNumber',
-      'phone_number': 'phoneNumber',
-      'email': 'emailAddress',
-      'email_address': 'emailAddress',
-      'citizenship': 'citizenship',
-      'country_of_birth': 'countryOfBirth'
-    };
+    let targetId = ALL_FIELD_IDS.has(rawFieldId) ? rawFieldId : null;
 
-    const actualFieldId = fieldMap[fieldId] || fieldId;
-    let finalValue = value;
-
-    if (actualFieldId === 'dateOfBirth' || actualFieldId === 'primaryBeneficiaryDOB' || actualFieldId === 'contingentBeneficiaryDOB') {
-        finalValue = formatDateForInput(value);
-        console.log(`[App] Formatted date '${value}' to '${finalValue}'`);
+    if (!targetId) {
+        const normalizedInput = normalize(rawFieldId);
+        for (const validId of ALL_FIELD_IDS) {
+            if (normalize(validId) === normalizedInput) {
+                targetId = validId;
+                break;
+            }
+            if (normalize(validId).includes(normalizedInput) || normalizedInput.includes(normalize(validId))) {
+                if (normalizedInput.length > 4) {
+                     targetId = validId;
+                     break;
+                }
+            }
+        }
     }
 
-    setFormData(prev => {
-      console.log(`[VoiceWidget] Updating state: ${actualFieldId} = ${finalValue}`);
-      return { ...prev, [actualFieldId]: finalValue };
-    });
+    if (targetId) {
+        let finalValue = value;
+        if (targetId.toLowerCase().includes('date') || targetId.toLowerCase().includes('dob')) {
+            finalValue = formatDateForInput(value);
+            console.log(`[App] Formatted date '${value}' to '${finalValue}'`);
+        }
 
-    toast.success(`Updated: ${actualFieldId}`);
+        setFormData(prev => ({ ...prev, [targetId!]: finalValue }));
+        toast.success(`Updated ${targetId}`);
+    } else {
+        console.error(`[Voice] Could not map agent field '${rawFieldId}' to any valid form ID.`);
+        toast.error(`Unknown field: ${rawFieldId}`);
+    }
   };
 
   const currentSection = sections[currentSectionIndex];
