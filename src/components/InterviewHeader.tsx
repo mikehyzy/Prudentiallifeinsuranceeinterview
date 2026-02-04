@@ -7,7 +7,7 @@ export function InterviewHeader() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-8">
             <div className="flex items-center">
-              <img src="/file_cgi_logo.svg" alt="CGI" className="h-10" />
+              <img src="/cgi_inc.-logo.wine.png" alt="CGI" className="h-10" />
             </div>
 
             <nav className="hidden md:flex items-center gap-6">
