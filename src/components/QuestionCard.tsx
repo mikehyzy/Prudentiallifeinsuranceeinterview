@@ -83,7 +83,7 @@ export function QuestionCard({
         
         <button
           onClick={() => setShowInfo(!showInfo)}
-          className="p-2 text-gray-400 hover:text-[#0046B8] transition-colors"
+          className="p-2 text-gray-400 hover:text-[#E31837] transition-colors"
         >
           <Info className="w-5 h-5" />
         </button>
@@ -94,7 +94,7 @@ export function QuestionCard({
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
-          className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-100"
+          className="mb-6 p-4 bg-red-50 rounded-lg border border-blue-100"
         >
           <p className="text-sm text-gray-700">{question.info}</p>
         </motion.div>
@@ -112,8 +112,8 @@ export function QuestionCard({
               variant={answer === 'yes' ? 'default' : 'outline'}
               className={`h-20 text-lg ${
                 answer === 'yes'
-                  ? 'bg-[#0046B8] hover:bg-[#003a9a]'
-                  : 'hover:border-[#0046B8] hover:text-[#0046B8]'
+                  ? 'bg-[#E31837] hover:bg-[#B81C3F]'
+                  : 'hover:border-[#E31837] hover:text-[#E31837]'
               }`}
             >
               <div className="flex flex-col items-center gap-2">
@@ -126,8 +126,8 @@ export function QuestionCard({
               variant={answer === 'no' ? 'default' : 'outline'}
               className={`h-20 text-lg ${
                 answer === 'no'
-                  ? 'bg-[#0046B8] hover:bg-[#003a9a]'
-                  : 'hover:border-[#0046B8] hover:text-[#0046B8]'
+                  ? 'bg-[#E31837] hover:bg-[#B81C3F]'
+                  : 'hover:border-[#E31837] hover:text-[#E31837]'
               }`}
             >
               <div className="flex flex-col items-center gap-2">
@@ -145,7 +145,7 @@ export function QuestionCard({
                 key={option}
                 className={`flex items-center gap-3 p-4 rounded-lg border-2 transition-all cursor-pointer ${
                   selectedOptions.includes(option)
-                    ? 'border-[#0046B8] bg-blue-50'
+                    ? 'border-[#E31837] bg-red-50'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
                 onClick={() => handleMultipleChoice(option)}
@@ -214,7 +214,7 @@ export function QuestionCard({
         <Button
           onClick={onNext}
           disabled={!canGoNext}
-          className="flex items-center gap-2 bg-[#0046B8] hover:bg-[#003a9a]"
+          className="flex items-center gap-2 bg-[#E31837] hover:bg-[#B81C3F]"
         >
           Next
           <ChevronRight className="w-4 h-4" />

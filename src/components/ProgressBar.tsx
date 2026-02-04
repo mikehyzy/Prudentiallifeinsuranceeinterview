@@ -14,7 +14,7 @@ export function ProgressBar({ sections, currentSection, onSectionClick }: Progre
         {/* Progress Line */}
         <div className="absolute top-5 left-0 right-0 h-0.5 bg-gray-200 -z-10">
           <motion.div 
-            className="h-full bg-[#0046B8]"
+            className="h-full bg-[#E31837]"
             initial={{ width: '0%' }}
             animate={{ width: `${(currentSection / (sections.length - 1)) * 100}%` }}
             transition={{ duration: 0.5, ease: 'easeInOut' }}
@@ -36,10 +36,10 @@ export function ProgressBar({ sections, currentSection, onSectionClick }: Progre
               <motion.div
                 className={`w-12 h-12 rounded-full flex items-center justify-center mb-2 transition-all shadow-lg font-bold text-lg ${
                   isCompleted
-                    ? 'bg-gradient-to-br from-[#0046B8] to-[#003087] text-white group-hover:shadow-xl'
+                    ? 'bg-gradient-to-br from-[#E31837] to-[#6B3FA0] text-white group-hover:shadow-xl'
                     : isCurrent
-                    ? 'bg-gradient-to-br from-[#0046B8] to-[#003087] text-white ring-4 ring-blue-200 shadow-2xl group-hover:shadow-xl'
-                    : 'bg-white border-3 border-gray-300 text-gray-400 group-hover:border-[#0046B8] group-hover:text-[#0046B8] group-hover:shadow-xl'
+                    ? 'bg-gradient-to-br from-[#E31837] to-[#6B3FA0] text-white ring-4 ring-red-200 shadow-2xl group-hover:shadow-xl'
+                    : 'bg-white border-3 border-gray-300 text-gray-400 group-hover:border-[#E31837] group-hover:text-[#E31837] group-hover:shadow-xl'
                 }`}
                 animate={isCurrent ? { scale: [1, 1.1, 1] } : { scale: 1 }}
                 transition={{ duration: 0.5 }}
@@ -55,10 +55,10 @@ export function ProgressBar({ sections, currentSection, onSectionClick }: Progre
               <span
                 className={`text-sm text-center max-w-[90px] transition-colors font-semibold ${
                   isCurrent
-                    ? 'text-[#0046B8] font-bold'
+                    ? 'text-[#E31837] font-bold'
                     : isCompleted
-                    ? 'text-gray-700 group-hover:text-[#0046B8]'
-                    : 'text-gray-400 group-hover:text-[#0046B8]'
+                    ? 'text-gray-700 group-hover:text-[#E31837]'
+                    : 'text-gray-400 group-hover:text-[#E31837]'
                 }`}
               >
                 {section}

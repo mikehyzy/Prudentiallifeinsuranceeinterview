@@ -29,14 +29,14 @@ export function VoiceAssistant({
             className="absolute bottom-24 right-0 w-96 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden"
           >
             {/* Gradient Header with AI Insurance Assistant Label */}
-            <div className="bg-gradient-to-r from-[#0046B8] to-[#003087] p-5 text-white relative">
+            <div className="bg-gradient-to-r from-[#E31837] to-[#6B3FA0] p-5 text-white relative">
               <div className="flex items-center gap-3 mb-2">
                 <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
                   <Sparkles className="w-5 h-5" />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-semibold">AI Insurance Assistant</h3>
-                  <p className="text-xs text-blue-100">Powered by Prudential AI</p>
+                  <p className="text-xs text-white/80">Powered by CGI AI</p>
                 </div>
                 {/* Close Button */}
                 <button
@@ -75,13 +75,13 @@ export function VoiceAssistant({
             <div className="p-5 space-y-4 max-h-96 overflow-y-auto">
               {/* AI Assistant Question */}
               <div className="flex gap-3">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#0046B8] to-[#003087] flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#E31837] to-[#6B3FA0] flex items-center justify-center flex-shrink-0">
                   <Volume2 className="w-4 h-4 text-white" />
                 </div>
                 <motion.div
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="flex-1 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl rounded-tl-none p-4 shadow-sm"
+                  className="flex-1 bg-gradient-to-br from-red-50 to-red-100 rounded-2xl rounded-tl-none p-4 shadow-sm"
                 >
                   <p className="text-sm text-gray-800 leading-relaxed">{currentQuestion}</p>
                 </motion.div>
@@ -94,7 +94,7 @@ export function VoiceAssistant({
                   animate={{ opacity: 1, x: 0 }}
                   className="flex gap-3 justify-end"
                 >
-                  <div className="flex-1 bg-gradient-to-br from-[#0046B8] to-[#003087] rounded-2xl rounded-tr-none p-4 shadow-lg max-w-[80%] ml-auto">
+                  <div className="flex-1 bg-gradient-to-br from-[#E31837] to-[#6B3FA0] rounded-2xl rounded-tr-none p-4 shadow-lg max-w-[80%] ml-auto">
                     <p className="text-sm text-white">{transcript}</p>
                   </div>
                   <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
@@ -135,7 +135,7 @@ export function VoiceAssistant({
                     key={prompt}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-xs text-gray-700 hover:border-[#0046B8] hover:text-[#0046B8] transition-all shadow-sm"
+                    className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-xs text-gray-700 hover:border-[#E31837] hover:text-[#E31837] transition-all shadow-sm"
                   >
                     {prompt}
                   </motion.button>
@@ -160,7 +160,7 @@ export function VoiceAssistant({
           style={{
             background: isActive 
               ? 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'
-              : 'linear-gradient(135deg, #0046B8 0%, #003087 100%)'
+              : 'linear-gradient(135deg, #E31837 0%, #6B3FA0 100%)'
           }}
         >
           {/* Shimmer effect on hover */}
@@ -201,7 +201,7 @@ export function VoiceAssistant({
           <motion.div
             className="absolute inset-0 rounded-full"
             style={{
-              background: 'radial-gradient(circle, rgba(0, 70, 184, 0.3) 0%, transparent 70%)'
+              background: 'radial-gradient(circle, rgba(227, 24, 55, 0.3) 0%, transparent 70%)'
             }}
             animate={{ 
               scale: [1, 1.8],
@@ -212,7 +212,7 @@ export function VoiceAssistant({
           <motion.div
             className="absolute inset-0 rounded-full"
             style={{
-              background: 'radial-gradient(circle, rgba(0, 70, 184, 0.3) 0%, transparent 70%)'
+              background: 'radial-gradient(circle, rgba(227, 24, 55, 0.3) 0%, transparent 70%)'
             }}
             animate={{ 
               scale: [1, 1.8],

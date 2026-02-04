@@ -158,14 +158,14 @@ export function SectionForm({
                 <Label
                   key={option}
                   htmlFor={`${field.id}-${option}`}
-                  className="flex items-center gap-3 cursor-pointer px-4 py-3 border-2 border-gray-300 rounded-lg hover:border-[#0046B8] hover:bg-blue-50 transition-all shadow-md"
+                  className="flex items-center gap-3 cursor-pointer px-4 py-3 border-2 border-gray-300 rounded-lg hover:border-[#E31837] hover:bg-red-50 transition-all shadow-md"
                   style={{
-                    borderColor: value === option ? '#0046B8' : '',
-                    backgroundColor: value === option ? '#E6F0FF' : ''
+                    borderColor: value === option ? '#E31837' : '',
+                    backgroundColor: value === option ? '#FFE6E9' : ''
                   }}
                 >
                   <RadioGroupItem value={option} id={`${field.id}-${option}`} />
-                  <span className={value === option ? 'text-[#0046B8]' : 'text-gray-700'}>
+                  <span className={value === option ? 'text-[#E31837]' : 'text-gray-700'}>
                     {option}
                   </span>
                 </Label>
@@ -224,7 +224,7 @@ export function SectionForm({
         className="bg-white rounded-lg shadow-lg p-8 mb-6"
       >
         <div className="text-center mb-8">
-          <h2 className="text-[#0046B8] mb-2">Review Your Information</h2>
+          <h2 className="text-[#E31837] mb-2">Review Your Information</h2>
           <p className="text-gray-600">Please review all your answers before submitting</p>
         </div>
 
@@ -248,7 +248,7 @@ export function SectionForm({
           </Button>
 
           <Button
-            className="flex items-center gap-2 bg-[#0046B8] hover:bg-[#003a9a]"
+            className="flex items-center gap-2 bg-[#E31837] hover:bg-[#B81C3F]"
           >
             Submit Application
             <Check className="w-4 h-4" />
@@ -268,7 +268,7 @@ export function SectionForm({
         {/* Section Header */}
         <div className="mb-8 pb-6 border-b border-gray-200">
           <div className="flex items-center justify-between mb-2">
-            <h2 className="text-[#0046B8]">{section.name}</h2>
+            <h2 className="text-[#E31837]">{section.name}</h2>
             <span className="text-sm text-gray-500">
               Section {sectionNumber} of {totalSections}
             </span>
@@ -299,13 +299,13 @@ export function SectionForm({
             <div className="mb-4">
               <div className="flex items-center justify-between text-sm mb-2">
                 <span className="text-gray-700">Required fields completed:</span>
-                <span className="text-[#0046B8]">
+                <span className="text-[#E31837]">
                   {answeredRequiredFields.length} of {requiredFields.length}
                 </span>
               </div>
               <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
                 <motion.div
-                  className="h-full bg-[#0046B8]"
+                  className="h-full bg-[#E31837]"
                   initial={{ width: '0%' }}
                   animate={{ width: `${(answeredRequiredFields.length / requiredFields.length) * 100}%` }}
                   transition={{ duration: 0.3 }}
@@ -329,7 +329,7 @@ export function SectionForm({
                 <Button
                   onClick={handleSaveForm}
                   variant="outline"
-                  className="flex items-center gap-2 border-[#0046B8] text-[#0046B8] hover:bg-[#0046B8] hover:text-white transition-colors"
+                  className="flex items-center gap-2 border-[#E31837] text-[#E31837] hover:bg-[#E31837] hover:text-white transition-colors"
                 >
                   <Save className="w-4 h-4" />
                   Save Form
@@ -338,7 +338,7 @@ export function SectionForm({
                 <Button
                   onClick={onNext}
                   disabled={!canGoNext}
-                  className="flex items-center gap-2 bg-[#0046B8] hover:bg-[#003a9a]"
+                  className="flex items-center gap-2 bg-[#E31837] hover:bg-[#B81C3F]"
                 >
                   Next Section
                   <ChevronRight className="w-4 h-4" />

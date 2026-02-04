@@ -32,7 +32,7 @@ export const VoiceWidget: React.FC<VoiceWidgetProps> = ({ onFieldUpdate }) => {
       },
       transferCall: (data: any) => {
         console.log('[VoiceWidget] Transfer requested', data);
-        toast.loading("Transferring to a live Prudential agent...", { duration: 5000 });
+        toast.loading("Transferring to a live CGI agent...", { duration: 5000 });
         return "Transfer initiated";
       }
     }
@@ -70,14 +70,14 @@ export const VoiceWidget: React.FC<VoiceWidgetProps> = ({ onFieldUpdate }) => {
              <div className="flex items-center justify-between mb-4">
                <div className="flex items-center gap-2">
                  <div className={`w-2.5 h-2.5 rounded-full ${conversation.status === 'connected' ? 'bg-green-500 animate-pulse' : 'bg-gray-300'}`} />
-                 <span className="font-semibold text-gray-800">Prudential Assistant</span>
+                 <span className="font-semibold text-gray-800">CGI Assistant</span>
                </div>
                <button onClick={() => conversation.endSession()} className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full p-1 transition-colors">
                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                </button>
              </div>
 
-             <div className="h-16 flex items-center justify-center bg-gradient-to-b from-blue-50 to-white rounded-xl border border-blue-100">
+             <div className="h-16 flex items-center justify-center bg-gradient-to-b from-red-50 to-white rounded-xl border border-red-100">
                 {conversation.isSpeaking ? (
                     <div className="flex items-center gap-1.5">
                       {[1,2,3,4].map(i => (
@@ -85,15 +85,15 @@ export const VoiceWidget: React.FC<VoiceWidgetProps> = ({ onFieldUpdate }) => {
                           key={i}
                           animate={{ height: [8, 32, 8] }}
                           transition={{ repeat: Infinity, duration: 0.5, delay: i * 0.1, ease: "easeInOut" }}
-                          className="w-1.5 bg-[#0046B8] rounded-full"
+                          className="w-1.5 bg-[#E31837] rounded-full"
                         />
                       ))}
                     </div>
                 ) : (
-                    <div className="text-sm text-[#0046B8] font-medium flex items-center gap-2">
+                    <div className="text-sm text-[#E31837] font-medium flex items-center gap-2">
                       <span className="relative flex h-3 w-3">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-3 w-3 bg-[#0046B8]"></span>
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-[#E31837]"></span>
                       </span>
                       Listening...
                     </div>
@@ -111,8 +111,8 @@ export const VoiceWidget: React.FC<VoiceWidgetProps> = ({ onFieldUpdate }) => {
           className="relative z-50 w-16 h-16 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex items-center justify-center transition-all overflow-hidden"
           style={{
             background: conversation.status === 'connected'
-              ? 'linear-gradient(135deg, #0046B8 0%, #001538 100%)'
-              : '#0046B8'
+              ? 'linear-gradient(135deg, #E31837 0%, #6B3FA0 100%)'
+              : 'linear-gradient(135deg, #E31837 0%, #6B3FA0 100%)'
           }}
         >
           {conversation.status === 'connected' ? (

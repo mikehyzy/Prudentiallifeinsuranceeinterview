@@ -97,7 +97,7 @@ export function ReviewSection({ formData, onPrevious, canGoPrevious }: ReviewSec
         >
           {/* Header */}
           <div className="mb-8">
-            <h2 className="text-[#0046B8] mb-2">Review Your Application</h2>
+            <h2 className="text-[#E31837] mb-2">Review Your Application</h2>
             <p className="text-gray-600">
               Please review the life insurance coverage you're applying for
             </p>
@@ -105,16 +105,16 @@ export function ReviewSection({ formData, onPrevious, canGoPrevious }: ReviewSec
 
           {/* Coverage Summary */}
           {formData.desiredCoverageAmount && (
-            <div className="bg-gradient-to-r from-[#0046B8] to-[#003087] rounded-lg p-6 mb-8 text-white">
+            <div className="bg-gradient-to-r from-[#E31837] to-[#6B3FA0] rounded-lg p-6 mb-8 text-white">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-blue-100 mb-1">Total Coverage Amount</p>
+                  <p className="text-white/80 mb-1">Total Coverage Amount</p>
                   <p className="text-3xl">{formData.desiredCoverageAmount}</p>
                 </div>
                 <DollarSign className="w-12 h-12 opacity-50" />
               </div>
               {formData.premiumPaymentFrequency && (
-                <p className="text-blue-100 mt-4">
+                <p className="text-white/80 mt-4">
                   Payment Frequency: {formData.premiumPaymentFrequency}
                 </p>
               )}
@@ -139,7 +139,7 @@ export function ReviewSection({ formData, onPrevious, canGoPrevious }: ReviewSec
                       onClick={() => toggleProduct(product.id)}
                       className={`flex items-start gap-4 p-4 rounded-lg border-2 transition-all cursor-pointer ${
                         product.checked
-                          ? 'border-[#0046B8] bg-blue-50 shadow-md'
+                          ? 'border-[#E31837] bg-red-50 shadow-md'
                           : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow'
                       }`}
                     >
@@ -152,8 +152,8 @@ export function ReviewSection({ formData, onPrevious, canGoPrevious }: ReviewSec
                       
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-3 mb-1">
-                          <Icon className={`w-5 h-5 ${product.checked ? 'text-[#0046B8]' : 'text-gray-400'}`} />
-                          <h4 className={`${product.checked ? 'text-[#0046B8]' : 'text-gray-900'}`}>
+                          <Icon className={`w-5 h-5 ${product.checked ? 'text-[#E31837]' : 'text-gray-400'}`} />
+                          <h4 className={`${product.checked ? 'text-[#E31837]' : 'text-gray-900'}`}>
                             {product.name}
                           </h4>
                           {product.checked && (
@@ -170,7 +170,7 @@ export function ReviewSection({ formData, onPrevious, canGoPrevious }: ReviewSec
                         </div>
                         <p className="text-sm text-gray-600 mb-2">{product.description}</p>
                         {product.checked && product.details && (
-                          <p className="text-sm text-[#0046B8] bg-white px-3 py-1.5 rounded inline-block">
+                          <p className="text-sm text-[#E31837] bg-white px-3 py-1.5 rounded inline-block">
                             {product.details}
                           </p>
                         )}
@@ -214,11 +214,11 @@ export function ReviewSection({ formData, onPrevious, canGoPrevious }: ReviewSec
           </div>
 
           {/* Selected Products Count */}
-          <div className="bg-blue-50 border-l-4 border-[#0046B8] p-4 rounded mb-8">
+          <div className="bg-red-50 border-l-4 border-[#E31837] p-4 rounded mb-8">
             <div className="flex items-center gap-2">
-              <Users className="w-5 h-5 text-[#0046B8]" />
+              <Users className="w-5 h-5 text-[#E31837]" />
               <p className="text-gray-900">
-                <span className="text-[#0046B8]">{checkedProducts.length}</span> life insurance{' '}
+                <span className="text-[#E31837]">{checkedProducts.length}</span> life insurance{' '}
                 {checkedProducts.length === 1 ? 'product' : 'products'} selected for your application
               </p>
             </div>
@@ -237,7 +237,7 @@ export function ReviewSection({ formData, onPrevious, canGoPrevious }: ReviewSec
             )}
             <Button
               onClick={handleSubmit}
-              className="bg-gradient-to-r from-[#0046B8] to-[#003087] text-white hover:opacity-90"
+              className="bg-gradient-to-r from-[#E31837] to-[#6B3FA0] text-white hover:opacity-90"
             >
               Submit Application
             </Button>
@@ -249,7 +249,7 @@ export function ReviewSection({ formData, onPrevious, canGoPrevious }: ReviewSec
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg py-4 px-6 z-10">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-r from-[#0046B8] to-[#003087] text-white w-10 h-10 rounded-full flex items-center justify-center">
+            <div className="bg-gradient-to-r from-[#E31837] to-[#6B3FA0] text-white w-10 h-10 rounded-full flex items-center justify-center">
               7
             </div>
             <div>
