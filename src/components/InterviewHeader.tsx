@@ -7,37 +7,37 @@ export function InterviewHeader() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-8">
             <div className="flex items-center">
-              <img src="/cgi_inc.-logo.wine.png" alt="CGI" className="h-10" />
+              <img src="/prudential-logo.svg" alt="Prudential" className="h-10" />
             </div>
 
             <nav className="hidden md:flex items-center gap-6">
-              <a href="#" className="text-gray-700 hover:text-[#E31837] transition-colors">
+              <a href="#" className="text-gray-700 hover:text-[#0046B8] transition-colors">
                 Products
               </a>
-              <a href="#" className="text-gray-700 hover:text-[#E31837] transition-colors">
+              <a href="#" className="text-gray-700 hover:text-[#0046B8] transition-colors">
                 Resources
               </a>
-              <a href="#" className="text-gray-700 hover:text-[#E31837] transition-colors">
+              <a href="#" className="text-gray-700 hover:text-[#0046B8] transition-colors">
                 About Us
               </a>
-              <a href="#" className="text-gray-700 hover:text-[#E31837] transition-colors">
+              <a href="#" className="text-gray-700 hover:text-[#0046B8] transition-colors">
                 Support
               </a>
             </nav>
           </div>
 
           <div className="flex items-center gap-4">
-            <button className="hidden md:flex items-center gap-2 text-gray-700 hover:text-[#E31837] transition-colors">
+            <button className="hidden md:flex items-center gap-2 text-gray-700 hover:text-[#0046B8] transition-colors">
               <Phone className="w-4 h-4" />
-              <span className="text-sm">1-800-CGI-4YOU</span>
+              <span className="text-sm">1-800-PRU-HELP</span>
             </button>
-            <button className="p-2 text-gray-700 hover:text-[#E31837] transition-colors">
+            <button className="p-2 text-gray-700 hover:text-[#0046B8] transition-colors">
               <MessageSquare className="w-5 h-5" />
             </button>
-            <button className="p-2 text-gray-700 hover:text-[#E31837] transition-colors">
+            <button className="p-2 text-gray-700 hover:text-[#0046B8] transition-colors">
               <User className="w-5 h-5" />
             </button>
-            <button className="md:hidden p-2 text-gray-700 hover:text-[#E31837] transition-colors">
+            <button className="md:hidden p-2 text-gray-700 hover:text-[#0046B8] transition-colors">
               <Menu className="w-5 h-5" />
             </button>
           </div>
